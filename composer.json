@@ -1,0 +1,29 @@
+{
+    "name": "uicklv/laravel-monobank",
+    "description": "Laravel package for Monobank",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.9",
+        "illuminate/support": "^11.43"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Uicklv\\LaravelMonobank\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Uicklv\\LaravelMonobank\\Providers\\MonobankServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Topor Mykola",
+            "email": "m.topor@adtelligent.com"
+        }
+    ]
+}

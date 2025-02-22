@@ -3,10 +3,21 @@ declare(strict_types=1);
 
 namespace Uicklv\LaravelMonobank\Services;
 
+use Uicklv\LaravelMonobank\Acquiring;
+
 class MonobankService
 {
-    public function test(): string
+
+    public function __construct(protected Acquiring $acquiring)
     {
-        return 'test';
+    }
+
+    public function createInvoice(array $data): array
+    {
+        if (!isset($data['amount'])) {
+            throw new \Exception('Amount is required');
+        }
+
+        return $this->acquiring->createInvoice($data);
     }
 }

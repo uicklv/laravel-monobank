@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Uicklv\LaravelMonobank\Acquiring;
 use Uicklv\LaravelMonobank\MonobankClient;
 use Uicklv\LaravelMonobank\Services\MonobankService;
+use Uicklv\LaravelMonobank\Facades\Monobank;
 
 class MonobankServiceProvider extends ServiceProvider
 {

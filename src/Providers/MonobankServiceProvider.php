@@ -5,6 +5,7 @@ namespace Uicklv\LaravelMonobank\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Uicklv\LaravelMonobank\Acquiring;
+use Uicklv\LaravelMonobank\MonobankClient;
 use Uicklv\LaravelMonobank\Services\MonobankService;
 
 class MonobankServiceProvider extends ServiceProvider
@@ -12,15 +13,14 @@ class MonobankServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(MonobankService::class, function () {
-            //todo check config ?
             $httpClient = new \GuzzleHttp\Client([
                 'base_uri' => config('monobank.url'),
                 'headers' => [
                     'X-Token' => config('monobank.token'),
                 ]
             ]);
-
-            $acquiring = new Acquiring($httpClient);
+            $monobankClient = new MonobankClient($httpClient);
+            $acquiring = new Acquiring($monobankClient);
 
             return new MonobankService($acquiring);
         });

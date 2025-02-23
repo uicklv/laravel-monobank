@@ -3,29 +3,56 @@ declare(strict_types=1);
 
 namespace Uicklv\LaravelMonobank;
 
-use GuzzleHttp\Client;
+use Uicklv\LaravelMonobank\DTO\Response;
+use Uicklv\LaravelMonobank\Enums\HttpMethod;
+use Uicklv\LaravelMonobank\Interfaces\HttpClient;
 
 class Acquiring
 {
-    /**
-     * @var Client
-     */
-    protected Client $client;
 
-    public function __construct(Client $client)
+    public function __construct(protected HttpClient $client)
     {
-        $this->client = $client;
     }
+
 
     /**
      * @param array $data
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return Response
      */
-    public function createInvoice(array $data): array
+    public function createInvoice(array $data): Response
     {
-        $response = $this->client->post('merchant/invoice/create', ['json' => $data]);
+        return $this->client->request(HttpMethod::POST, 'merchant/invoice/create', $data);
+    }
 
-        return json_decode($response->getBody()->getContents(), true);
+    /**
+     * @param string $invoiceId
+     * @return Response
+     */
+    public function getInvoiceStatus(string $invoiceId): Response
+    {
+        return $this->client->request(HttpMethod::GET, 'merchant/invoice/status', [
+            'invoiceId' => $invoiceId
+        ]);
+    }
+
+
+    /**
+     * @param array $data
+     * @return Response
+     */
+    public function cancelInvoice(array $data): Response
+    {
+        return $this->client->request(HttpMethod::POST,'merchant/invoice/cancel', $data);
+    }
+
+    /**
+     * @param string $invoiceId
+     * @return Response
+     */
+    public function invalidateInvoice(string $invoiceId): Response
+    {
+        return $this->client->request(HttpMethod::POST, 'merchant/invoice/remove', [
+            'invoiceId' => $invoiceId
+        ]);
     }
 }

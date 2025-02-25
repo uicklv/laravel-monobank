@@ -10,7 +10,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Uicklv\\LaravelMonobank\\": "src/"
+            "Uicklv\\LaravelMonobank\\": "src/",
+            "Uicklv\\LaravelMonobank\\tests\\": "tests/"
         }
     },
     "extra": {
@@ -25,5 +26,11 @@
             "name": "Topor Mykola",
             "email": "m.topor@adtelligent.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^9.11"
+    },
+    "autoload-dev": {
+        "Uicklv\\LaravelMonobank\\tests\\": "tests/"
+    }
 }

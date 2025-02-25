@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Uicklv\LaravelMonobank\Services;
 
+use Illuminate\Http\Request;
 use Uicklv\LaravelMonobank\Acquiring;
+use Uicklv\LaravelMonobank\DTO\Invoice;
 use Uicklv\LaravelMonobank\DTO\Response;
 
 class MonobankService
@@ -24,7 +26,11 @@ class MonobankService
     public function createInvoice(array $data): Response
     {
         if (!isset($data['amount'])) {
-            throw new \Exception('Amount is required');
+            throw new \Exception('Amount is required.');
+        }
+
+        if (!is_int($data['amount'])) {
+            throw new \Exception('Amount must be an integer.');
         }
 
         return $this->acquiring->createInvoice($data);
@@ -61,5 +67,14 @@ class MonobankService
     public function invalidateInvoice(string $invoiceId): Response
     {
         return $this->acquiring->invalidateInvoice($invoiceId);
+    }
+
+    /**
+     * @param Request $request
+     * @return Invoice
+     */
+    public function parseCallbackData(Request $request): Invoice
+    {
+        return Invoice::fromRequest($request);
     }
 }

@@ -15,20 +15,20 @@ class MonobankClient implements HttpClient
     {
     }
 
-    public function request(HttpMethod $method, string $url, array $data): Response
+    public function request(HttpMethod $method, string $url, array $data = []): Response
     {
-
-        if ($method->value === 'GET') {
+        $httpMethod = $method->value;
+        if (($httpMethod === HttpMethod::GET->value || $httpMethod === HttpMethod::DELETE->value) && !empty($data)) {
             $url .= '?' . http_build_query($data);
         }
 
-        if ($method->value === 'POST') {
+        if ($httpMethod === HttpMethod::POST->value && !empty($data)) {
             $requestData = [
                 'json' => $data,
             ];
         }
 
-        $response = $this->httpClient->request($method->value, $url, $requestData ?? []);
+        $response = $this->httpClient->request($httpMethod, $url, $requestData ?? []);
 
         return new Response(
             json_decode($response->getBody()->getContents(), true),

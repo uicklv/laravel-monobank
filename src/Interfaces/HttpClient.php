@@ -8,5 +8,11 @@ use Uicklv\LaravelMonobank\Enums\HttpMethod;
 
 interface HttpClient
 {
-    public function request(HttpMethod $method, string $url, array $data): Response;
+    /**
+     * @param HttpMethod $method
+     * @param string $url
+     * @param array $data
+     * @return Response
+     */
+    public function request(HttpMethod $method, string $url, array $data = []): Response;
 }

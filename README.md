@@ -53,7 +53,5 @@ $response->get('invoiceId')
 // Отримання page url оплати
 $response->get('pageUrl'),
 ```
-## Документація Monobank 
-```
-https://api.monobank.ua/docs/acquiring.html
-```
+[Документація Monobank](https://api.monobank.ua/docs/acquiring.html)
+
